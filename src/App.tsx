@@ -159,7 +159,12 @@ export default function App() {
     const descMeta = document.querySelector('meta[name="description"]');
     if (descMeta) descMeta.setAttribute('content', activeSeo.seoDescription);
     const canon = document.querySelector('link[rel="canonical"]');
-    if (canon) canon.setAttribute('href', `https://mypdfbuilder.com/${activeSeo.slug}`);
+    const canonicalUrl = `https://mypdfbuilder.com/${activeSeo.slug}/`;
+    if (canon) canon.setAttribute('href', canonicalUrl);
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) ogUrl.setAttribute('content', canonicalUrl);
+    const twitterUrl = document.querySelector('meta[name="twitter:url"]');
+    if (twitterUrl) twitterUrl.setAttribute('content', canonicalUrl);
   }, [activeSeo]);
 
   useEffect(() => {
@@ -294,7 +299,7 @@ export default function App() {
   const selectPlatformTool = (tool: ActivePlatformTool, focusUpload = false) => {
     setActivePlatformTool(tool);
     if (typeof window !== 'undefined') {
-      const targetPath = `/${TOOLS_SEO[tool].slug}`;
+      const targetPath = `/${TOOLS_SEO[tool].slug}/`;
       if (window.location.pathname !== targetPath) {
         window.history.pushState({ tool }, '', targetPath);
       }

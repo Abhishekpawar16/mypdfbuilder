@@ -1140,7 +1140,11 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
           <p className="text-sm text-slate-600 dark:text-slate-400">
             Paste HTML markup below to extract structured text and export it as a clean A4 PDF.
           </p>
+          <label htmlFor="html-to-pdf-input" className="block text-sm font-semibold">
+            HTML markup
+          </label>
           <textarea
+            id="html-to-pdf-input"
             rows={8}
             value={htmlInput}
             onChange={(e) => setHtmlInput(e.target.value)}

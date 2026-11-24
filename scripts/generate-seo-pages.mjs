@@ -22,6 +22,21 @@ const TOOLS = [
 
 const distDir = path.resolve('dist');
 const baseHtml = fs.readFileSync(path.join(distDir, 'index.html'), 'utf-8');
+const escapeHtml = (value) => value
+  .replaceAll('&', '&amp;')
+  .replaceAll('<', '&lt;')
+  .replaceAll('>', '&gt;')
+  .replaceAll('"', '&quot;')
+  .replaceAll("'", '&#39;');
+
+const buildSeoFallback = (tool) => `
+      <main id="seo-fallback">
+        <h1>${escapeHtml(tool.name)} online</h1>
+        <p>${escapeHtml(tool.desc)}</p>
+        <h2>Use ${escapeHtml(tool.name)} in your browser</h2>
+        <p>Enable JavaScript to use this browser-based PDF tool.</p>
+        <p><a href="/">Return to MyPDFBuilder</a></p>
+      </main>`;
 
 for (const tool of TOOLS) {
   const url = `https://mypdfbuilder.com/${tool.slug}/`;
@@ -57,7 +72,8 @@ for (const tool of TOOLS) {
     .replace(/<meta\s+name="twitter:url"[\s\S]*?\/>/, `<meta name="twitter:url" content="${url}" />`)
     .replace(/<meta\s+name="twitter:title"[\s\S]*?\/>/, `<meta name="twitter:title" content="${tool.title}" />`)
     .replace(/<meta\s+name="twitter:description"[\s\S]*?\/>/, `<meta name="twitter:description" content="${tool.desc}" />`)
-    .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/, `<script type="application/ld+json">${jsonLd}</script>`);
+    .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/, `<script type="application/ld+json">${jsonLd}</script>`)
+    .replace(/<main id="seo-fallback">[\s\S]*?<\/main>/, buildSeoFallback(tool));
 
   const outDir = path.join(distDir, tool.slug);
   fs.mkdirSync(outDir, { recursive: true });

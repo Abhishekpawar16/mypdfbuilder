@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="mpbBg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#312E81"/>
+      <stop offset="55%" stop-color="#4F46E5"/>
+      <stop offset="100%" stop-color="#0EA5E9"/>
+    </linearGradient>
+    <style>
+      @keyframes mpbBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+      @keyframes mpbBlink { 0%, 92%, 100% { transform: scaleY(1); } 96% { transform: scaleY(0.15); } }
+      .mpb-bob { animation: mpbBob 2.2s ease-in-out infinite; transform-origin: center; }
+      .mpb-eye { animation: mpbBlink 3.6s ease-in-out infinite; transform-origin: center 27px; }
+    </style>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#mpbBg)"/>
+  <g class="mpb-bob">
+    <!-- Ears -->
+    <circle cx="20" cy="21" r="4.5" fill="#78350F"/>
+    <circle cx="44" cy="21" r="4.5" fill="#78350F"/>
+    <!-- Beaver Head -->
+    <ellipse cx="32" cy="30" rx="14" ry="12" fill="#92400E"/>
+    <!-- Cheeks -->
+    <ellipse cx="25" cy="34" rx="4.5" ry="3.2" fill="#D97706"/>
+    <ellipse cx="39" cy="34" rx="4.5" ry="3.2" fill="#D97706"/>
+    <!-- Builder Hard Hat -->
+    <path d="M19 22c0-6.5 5.8-11 13-11s13 4.5 13 11H19z" fill="#FACC15"/>
+    <rect x="16" y="20.5" width="32" height="3.5" rx="1.75" fill="#EAB308"/>
+    <rect x="29.5" y="12" width="5" height="8" rx="2" fill="#FEF08A"/>
+    <!-- Eyes -->
+    <circle cx="26.5" cy="27.5" r="2.2" fill="#FFFFFF" class="mpb-eye"/>
+    <circle cx="37.5" cy="27.5" r="2.2" fill="#FFFFFF" class="mpb-eye"/>
+    <circle cx="26.8" cy="27.5" r="1.1" fill="#0F172A" class="mpb-eye"/>
+    <circle cx="37.8" cy="27.5" r="1.1" fill="#0F172A" class="mpb-eye"/>
+    <!-- Nose & Teeth -->
+    <ellipse cx="32" cy="31.5" rx="3" ry="2" fill="#1E293B"/>
+    <rect x="29.5" y="34" width="2.2" height="3.2" rx="0.6" fill="#FFFFFF"/>
+    <rect x="32.3" y="34" width="2.2" height="3.2" rx="0.6" fill="#FFFFFF"/>
+    <!-- PDF Page Being Built -->
+    <rect x="21" y="40" width="22" height="16" rx="3" fill="#FFFFFF" stroke="#C7D2FE" stroke-width="1.5"/>
+    <rect x="25" y="44" width="14" height="2.2" rx="1.1" fill="#4F46E5"/>
+    <rect x="25" y="48.5" width="10" height="2.2" rx="1.1" fill="#38BDF8"/>
+  </g>
+</svg>

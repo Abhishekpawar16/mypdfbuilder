@@ -24,7 +24,7 @@ const distDir = path.resolve('dist');
 const baseHtml = fs.readFileSync(path.join(distDir, 'index.html'), 'utf-8');
 
 for (const tool of TOOLS) {
-  const url = `https://mypdfbuilder.com/${tool.slug}`;
+  const url = `https://mypdfbuilder.com/${tool.slug}/`;
   const jsonLd = JSON.stringify({
     '@context': 'https://schema.org',
     '@graph': [

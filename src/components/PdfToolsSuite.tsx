@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PDFDocument, StandardFonts, degrees, rgb } from 'pdf-lib';
 import JSZip from 'jszip';
 import type * as XLSX from 'xlsx';
@@ -75,6 +75,10 @@ async function loadPdfJs() {
 export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSendTextToEditor }) => {
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState<{ type: 'success' | 'error'; msg: string } | null>(null);
+
+  useEffect(() => {
+    setStatus(null);
+  }, [activeTool]);
 
   // Merge PDF state
   const [mergeFiles, setMergeFiles] = useState<File[]>([]);
@@ -259,8 +263,13 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
         const h = img.height * ratio;
         const x = (pageW - w) / 2;
         const y = (pageH - h) / 2;
-        const fmt = item.file.type.includes('png') ? 'PNG' : 'JPEG';
-        doc.addImage(item.previewUrl, fmt, x, y, w, h);
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const context = canvas.getContext('2d');
+        if (!context) throw new Error('Could not process the selected image.');
+        context.drawImage(img, 0, 0);
+        doc.addImage(canvas.toDataURL('image/png'), 'PNG', x, y, w, h);
       }
       doc.save('images-mypdfbuilder.pdf');
       setStatus({ type: 'success', msg: `Converted ${imageFiles.length} image(s) to images-mypdfbuilder.pdf.` });

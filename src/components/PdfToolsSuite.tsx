@@ -391,7 +391,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
           <p className="text-sm text-slate-600 dark:text-slate-400">
             Combine multiple PDFs in your preferred order directly in your browser.
           </p>
-          <label id="tool-upload" className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 p-8 text-center hover:border-indigo-400 dark:border-slate-700 dark:bg-slate-950">
+          <label className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 p-8 text-center hover:border-indigo-400 dark:border-slate-700 dark:bg-slate-950">
             <Upload className="h-7 w-7 text-indigo-600" />
             <span className="mt-2 text-sm font-semibold">Select PDF files to merge</span>
             <input
@@ -476,7 +476,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
           <p className="text-sm text-slate-600 dark:text-slate-400">
             Extract specific pages or page ranges from a PDF document locally.
           </p>
-          <label id="tool-upload" className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 p-8 text-center hover:border-indigo-400 dark:border-slate-700 dark:bg-slate-950">
+          <label className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 p-8 text-center hover:border-indigo-400 dark:border-slate-700 dark:bg-slate-950">
             <Upload className="h-7 w-7 text-indigo-600" />
             <span className="mt-2 text-sm font-semibold">
               {splitFile ? `${splitFile.name} (${splitPageCount} pages)` : 'Select a PDF file to split'}
@@ -525,7 +525,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
           <p className="text-sm text-slate-600 dark:text-slate-400">
             Optimize PDF object streams and strip redundant metadata in your browser.
           </p>
-          <label id="tool-upload" className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 p-8 text-center hover:border-indigo-400 dark:border-slate-700 dark:bg-slate-950">
+          <label className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 p-8 text-center hover:border-indigo-400 dark:border-slate-700 dark:bg-slate-950">
             <Upload className="h-7 w-7 text-indigo-600" />
             <span className="mt-2 text-sm font-semibold">
               {compressFile ? `${compressFile.name} (${formatBytes(compressFile.size)})` : 'Select a PDF file'}
@@ -557,7 +557,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
           <p className="text-sm text-slate-600 dark:text-slate-400">
             Convert one or multiple JPG/PNG images into a multi-page A4 PDF document.
           </p>
-          <label id="tool-upload" className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 p-8 text-center hover:border-indigo-400 dark:border-slate-700 dark:bg-slate-950">
+          <label className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 p-8 text-center hover:border-indigo-400 dark:border-slate-700 dark:bg-slate-950">
             <Upload className="h-7 w-7 text-indigo-600" />
             <span className="mt-2 text-sm font-semibold">Select JPG or PNG images</span>
             <input
@@ -620,7 +620,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
           <p className="text-sm text-slate-600 dark:text-slate-400">
             Render every page of your PDF as a high-quality JPG image locally.
           </p>
-          <label id="tool-upload" className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 p-8 text-center hover:border-indigo-400 dark:border-slate-700 dark:bg-slate-950">
+          <label className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 p-8 text-center hover:border-indigo-400 dark:border-slate-700 dark:bg-slate-950">
             <Upload className="h-7 w-7 text-indigo-600" />
             <span className="mt-2 text-sm font-semibold">{busy ? 'Rendering pages...' : 'Select a PDF file'}</span>
             <input
@@ -661,7 +661,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
           <p className="text-sm text-slate-600 dark:text-slate-400">
             Extract selectable text from any PDF document without uploading it.
           </p>
-          <label id="tool-upload" className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 p-8 text-center hover:border-indigo-400 dark:border-slate-700 dark:bg-slate-950">
+          <label className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 p-8 text-center hover:border-indigo-400 dark:border-slate-700 dark:bg-slate-950">
             <Upload className="h-7 w-7 text-indigo-600" />
             <span className="mt-2 text-sm font-semibold">{busy ? 'Extracting text...' : 'Select a PDF file'}</span>
             <input

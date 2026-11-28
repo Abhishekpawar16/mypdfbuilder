@@ -700,7 +700,10 @@ export default function App() {
                   </p>
                   <button
                     type="button"
-                    onClick={() => selectPlatformTool('text-to-pdf', true)}
+                    onClick={() => {
+                    if (activePlatformTool === 'text-to-pdf') fileInputRef.current?.click();
+                    else document.getElementById('tool-upload')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  }}
                     className="mt-6 inline-flex w-full max-w-xs items-center justify-center gap-2 rounded-full bg-indigo-600 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-600/25 transition hover:bg-indigo-700"
                   >
                     <Plus className="h-5 w-5" />
@@ -730,7 +733,10 @@ export default function App() {
                 </p>
                 <button
                   type="button"
-                  onClick={() => selectPlatformTool('text-to-pdf', true)}
+                  onClick={() => {
+                    if (activePlatformTool === 'text-to-pdf') fileInputRef.current?.click();
+                    else document.getElementById('tool-upload')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  }}
                   className="mt-6 inline-flex w-full max-w-xs items-center justify-center gap-2.5 rounded-full bg-indigo-600 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-600/25 transition hover:bg-indigo-700"
                 >
                   <Plus className="h-5 w-5" />

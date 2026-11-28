@@ -1,4 +1,5 @@
 import React from 'react';
+import { ADSENSE_ENABLED, ADSENSE_PUBLISHER_ID } from '../config/tracking';
 
 export type AdPlacement =
   | 'header-banner'
@@ -41,9 +42,10 @@ const PLACEMENT_META: Record<AdPlacement, { label: string; sizeHint: string; min
   },
 };
 
-// Toggle to true after AdSense approval and adding your publisher script in index.html
-const ADSENSE_ENABLED = false;
-const PUBLISHER_ID = 'ca-pub-9543978037261848';
+// ADSENSE_ENABLED lives in src/config/tracking.ts so the privacy disclosures
+// update together with the ad integration. Consent for EEA/UK/Switzerland
+// visitors must be collected by a Google-certified CMP before ads are enabled.
+const PUBLISHER_ID = ADSENSE_PUBLISHER_ID;
 
 export const AdSlot: React.FC<AdSlotProps> = ({
   placement,

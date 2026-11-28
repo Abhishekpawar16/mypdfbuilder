@@ -1,5 +1,57 @@
 import React from 'react';
 import { X } from 'lucide-react';
+import {
+  ADSENSE_ENABLED,
+  ANALYTICS_ENABLED,
+  ANALYTICS_PROVIDER_NAME,
+  ANALYTICS_PROVIDER_PRIVACY_URL,
+} from '../config/tracking';
+import { openCookieSettings } from '../utils/consent';
+
+const POLICY_LAST_UPDATED = 'November 28, 2026';
+const linkClass = 'font-medium text-indigo-600 underline dark:text-indigo-400';
+const h3Class = 'text-base font-bold text-slate-900 dark:text-white';
+
+const ExtLink: React.FC<{ href: string; children: React.ReactNode }> = ({ href, children }) => (
+  <a href={href} target="_blank" rel="noopener noreferrer" className={linkClass}>
+    {children}
+  </a>
+);
+
+const CookieSettingsButton: React.FC = () => (
+  <button type="button" onClick={openCookieSettings} className={linkClass}>
+    Cookie Settings
+  </button>
+);
+
+const analyticsProviderText = ANALYTICS_PROVIDER_NAME ? ANALYTICS_PROVIDER_NAME : 'a third-party analytics service';
+
+const AnalyticsStatus: React.FC = () =>
+  ANALYTICS_ENABLED ? (
+    <>
+      We use {analyticsProviderText} to understand website traffic and how visitors use our tools.
+      {ANALYTICS_PROVIDER_PRIVACY_URL && (
+        <>
+          {' '}See the provider&apos;s <ExtLink href={ANALYTICS_PROVIDER_PRIVACY_URL}>privacy policy</ExtLink>.
+        </>
+      )}
+    </>
+  ) : (
+    <>
+      We are introducing analytics to understand website traffic and how visitors use our tools. At the time of this
+      update, analytics scripts are not yet running on the site; this policy will name the provider once it is live.
+    </>
+  );
+
+const AdsStatus: React.FC = () =>
+  ADSENSE_ENABLED ? (
+    <>We use Google AdSense to display advertising that helps keep MyPDFBuilder free.</>
+  ) : (
+    <>
+      We plan to display advertising through Google AdSense to keep MyPDFBuilder free. At the time of this update,
+      AdSense ads are not yet active on the site.
+    </>
+  );
 
 export type LegalDocType = 'privacy' | 'terms' | 'disclaimer' | 'cookies' | 'about' | null;
 
@@ -74,7 +126,7 @@ const LEGAL_CONTENT: Record<Exclude<LegalDocType, null>, { title: string; body: 
     title: 'Privacy Policy',
     body: (
       <div className="space-y-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-        <p className="text-xs text-slate-400">Last Updated: November 24, 2026</p>
+        <p className="text-xs text-slate-400">Last Updated: {POLICY_LAST_UPDATED}</p>
         <p>
           At <strong>MyPDFBuilder</strong> (<code>mypdfbuilder.com</code>), your privacy comes first. This Privacy
           Policy explains what happens when you use our tools, what limited data may be processed, and the choices you
@@ -99,22 +151,68 @@ const LEGAL_CONTENT: Record<Exclude<LegalDocType, null>, { title: string; body: 
           </p>
         </div>
         <div>
-          <h3 className="text-base font-bold text-slate-900 dark:text-white">3. Analytics &amp; Google AdSense</h3>
+          <h3 className={h3Class}>3. Analytics</h3>
           <p className="mt-1">
-            Analytics and advertising scripts are not enabled in this release. If they are added later, this policy and
-            the consent controls will be updated before they are activated.
+            <AnalyticsStatus /> Analytics may collect information such as pages visited, tools used, approximate
+            location derived from your IP address, device and browser type, referring website, and timestamps.
+            Analytics never receives the contents of the documents or text you process. Analytics runs only if you allow
+            it in <CookieSettingsButton />.
           </p>
         </div>
         <div>
-          <h3 className="text-base font-bold text-slate-900 dark:text-white">4. Contact &amp; your rights</h3>
+          <h3 className={h3Class}>4. Advertising &amp; Google AdSense</h3>
+          <p className="mt-1">
+            <AdsStatus /> When advertising is active:
+          </p>
+          <ul className="mt-2 list-disc space-y-1 pl-5">
+            <li>
+              Third-party vendors, including Google, use cookies to serve ads based on your prior visits to this website
+              or other websites.
+            </li>
+            <li>
+              Google&apos;s use of advertising cookies enables it and its partners to serve ads to you based on your
+              visits to this site and/or other sites on the Internet.
+            </li>
+            <li>
+              You may opt out of personalized advertising by visiting{' '}
+              <ExtLink href="https://www.google.com/settings/ads">Google Ads Settings</ExtLink>. You can also opt out of
+              some third-party vendors&apos; use of cookies for personalized advertising at{' '}
+              <ExtLink href="https://www.aboutads.info/choices/">www.aboutads.info</ExtLink>.
+            </li>
+            <li>
+              Learn{' '}
+              <ExtLink href="https://policies.google.com/technologies/partner-sites">
+                how Google uses information from sites that use its services
+              </ExtLink>
+              .
+            </li>
+          </ul>
+          <p className="mt-2">
+            Visitors in the European Economic Area, the United Kingdom, and Switzerland will be asked for consent
+            through a Google-certified consent tool before personalized ads are shown. Elsewhere, you can turn
+            advertising cookies on or off in <CookieSettingsButton />.
+          </p>
+        </div>
+        <div>
+          <h3 className={h3Class}>5. Third-party services</h3>
+          <p className="mt-1">
+            Third parties that may process information when you use the site include our hosting provider (to deliver
+            and secure the website), the analytics provider (only with your consent, once active), and Google and its
+            advertising partners (once advertising is active, subject to your consent choices where required). These
+            providers process data under their own privacy policies.
+          </p>
+        </div>
+        <div>
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">6. Contact &amp; your rights</h3>
           <p className="mt-1">
             The contact form opens a draft in your email application; it does not submit the message to our website.
             If you send that message or email us at{' '}
             <a href="mailto:support@mypdfbuilder.com" className="font-medium text-indigo-600 underline dark:text-indigo-400">
               support@mypdfbuilder.com
             </a>
-            , we use your name and email solely to reply. Under GDPR, CCPA, and similar laws, you may request access to
-            or deletion of any direct correspondence at any time.
+            , we use your name and email solely to reply. Depending on where you live, laws such as the GDPR or CCPA
+            may give you rights to access or delete your personal information; contact us to make a request. You can
+            withdraw or change cookie consent at any time in <CookieSettingsButton />.
           </p>
         </div>
       </div>
@@ -192,23 +290,57 @@ const LEGAL_CONTENT: Record<Exclude<LegalDocType, null>, { title: string; body: 
     title: 'Cookie Policy',
     body: (
       <div className="space-y-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-        <p className="text-xs text-slate-400">Last Updated: November 24, 2026</p>
+        <p className="text-xs text-slate-400">Last Updated: {POLICY_LAST_UPDATED}</p>
         <p>
-          This notice explains how <strong>MyPDFBuilder</strong> (<code>mypdfbuilder.com</code>) uses browser storage.
+          This notice explains how <strong>MyPDFBuilder</strong> (<code>mypdfbuilder.com</code>) uses cookies and
+          similar technologies such as <code>localStorage</code>, and how you can control them. The documents and text
+          you process stay in your browser and are not placed in cookies.
         </p>
         <div>
-          <h3 className="text-base font-bold text-slate-900 dark:text-white">1. Essential browser storage</h3>
+          <h3 className={h3Class}>1. Necessary storage (always active)</h3>
           <p className="mt-1">
-            The site stores your theme, language, and notice dismissal in localStorage. Text drafts are not saved unless
-            you enable Auto-Save in the editor; it is off by default for new browser profiles. A draft from an earlier
-            version may be restored for one session. Turning Auto-Save off or using Clear Saved Data removes the saved
-            draft.
+            These are required for the site to work and do not need consent. The site stores your theme, language, and
+            cookie choice in <code>localStorage</code>. Text drafts are saved only if you enable Auto-Save in the Text
+            to PDF editor; it is off by default. Turning Auto-Save off or using Clear Saved Data removes the saved draft.
+            Our hosting provider may also set strictly necessary security cookies to protect the site from abuse.
           </p>
         </div>
         <div>
-          <h3 className="text-base font-bold text-slate-900 dark:text-white">2. Analytics and advertising</h3>
+          <h3 className={h3Class}>2. Analytics cookies (optional)</h3>
           <p className="mt-1">
-            No analytics or advertising scripts or cookies are enabled in this release.
+            <AnalyticsStatus /> Analytics cookies and similar identifiers help us measure visits, popular tools, and
+            errors. They are set only if you allow &ldquo;Analytics&rdquo; in <CookieSettingsButton />.
+          </p>
+        </div>
+        <div>
+          <h3 className={h3Class}>3. Advertising cookies (optional)</h3>
+          <p className="mt-1">
+            <AdsStatus /> Google and its partners may use advertising cookies and similar technologies to serve ads,
+            limit how often you see an ad, measure ad performance, prevent fraud, and, where permitted, show
+            personalized ads based on your visits to this and other websites. You can opt out of personalized
+            advertising at <ExtLink href="https://www.google.com/settings/ads">Google Ads Settings</ExtLink> or{' '}
+            <ExtLink href="https://www.aboutads.info/choices/">www.aboutads.info</ExtLink>, and read{' '}
+            <ExtLink href="https://policies.google.com/technologies/ads">how Google uses cookies in advertising</ExtLink>.
+          </p>
+        </div>
+        <div>
+          <h3 className={h3Class}>4. Your choices</h3>
+          <p className="mt-1">
+            On your first visit you can accept all, reject non-essential, or customize analytics and advertising
+            separately. You can change your choice at any time in <CookieSettingsButton /> (also in the website
+            footer). Visitors in the EEA, UK, and Switzerland will see a Google-certified consent message before
+            personalized ads are shown. You can also block or delete cookies in your browser settings; necessary
+            storage may then stop working.
+          </p>
+        </div>
+        <div>
+          <h3 className={h3Class}>5. Changes and contact</h3>
+          <p className="mt-1">
+            We will update this policy when we add or change analytics or advertising services. Questions? Email{' '}
+            <a href="mailto:support@mypdfbuilder.com" className={linkClass}>
+              support@mypdfbuilder.com
+            </a>
+            .
           </p>
         </div>
       </div>

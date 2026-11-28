@@ -26,4 +26,4 @@ The production build is written to `dist/` and includes dedicated landing pages 
 
 The project uses `public/_headers` for Cloudflare Pages security headers. See [DEPLOYMENT_AND_SEO_GUIDE.md](DEPLOYMENT_AND_SEO_GUIDE.md) for domain, redirect, Search Console, and AdSense setup.
 
-AdSense is not active. The ad component remains disabled until the site is approved and real ad-unit IDs and applicable consent settings are configured.
+AdSense is not active. The ad component remains disabled until the site is approved and real ad-unit IDs and applicable consent settings are configured. Analytics and AdSense switches live in `src/config/tracking.ts`; the privacy/cookie text and consent banner follow them automatically.

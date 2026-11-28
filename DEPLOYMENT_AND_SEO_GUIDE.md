@@ -7,7 +7,7 @@
 - The GitHub source is `https://github.com/Abhishekpawar16/mypdfbuilder`.
 - Cloudflare Pages build command: `npm run build`; output directory: `dist`; root directory: repository root.
 - `public/_headers` is copied to `dist/_headers` and contains the current security headers. [Cloudflare Pages applies `_headers` rules to static asset responses](https://developers.cloudflare.com/pages/configuration/headers/).
-- No analytics or ad code is active. `ADSENSE_ENABLED` remains `false`; no ad-unit slot IDs are configured. `public/ads.txt` now contains the publisher ID supplied for this project: `pub-9543978037261848`. Verify the ID in AdSense before launch.
+- No analytics or ad script is loaded yet. `ANALYTICS_ENABLED` and `ADSENSE_ENABLED` in `src/config/tracking.ts` remain `false`; no ad-unit slot IDs are configured. `public/ads.txt` now contains the publisher ID supplied for this project: `pub-9543978037261848`. Verify the ID in AdSense before launch.
 - Contact opens a prefilled email draft; it does not submit to a website server.
 
 ## Build locally
@@ -45,3 +45,11 @@ No live deployment, domain ownership, TLS, DNS, redirect, production headers, Se
 ## AdSense
 
 The supplied publisher ID is staged in `ads.txt` and in the disabled ad component. Before serving ads, verify that the ID matches the AdSense account, confirm site approval, obtain real ad-unit slot IDs, enable the ad component and global script deliberately, update CSP only for required Google endpoints, and configure Google's required consent management for applicable regions. Do not treat the `ads.txt` entry by itself as active ad integration.
+
+## Analytics, consent and privacy disclosures
+
+- `src/config/tracking.ts` is the single switch for analytics and AdSense. The Cookie Policy, Privacy Policy and cookie banner read it, so flip `ANALYTICS_ENABLED` / `ADSENSE_ENABLED` (and set `ANALYTICS_PROVIDER_NAME` / `ANALYTICS_PROVIDER_PRIVACY_URL`) in the same change that adds the script. Update `POLICY_LAST_UPDATED` in `src/components/LegalModal.tsx` whenever disclosures change.
+- `src/utils/consent.ts` stores the visitor's choice (`mypdfbuilder_cookie_consent_v2`) for three categories: necessary, analytics, advertising. Load analytics only when `hasConsent('analytics')` is true, and react to later changes with `onConsentChange`.
+- Google Consent Mode v2 defaults (all denied) are pushed to `window.dataLayer` before the app renders, and each saved choice sends a `consent update`. Google tags added later inherit these signals.
+- The built-in banner is **not** a Google-certified CMP. For AdSense traffic from the EEA, UK and Switzerland, Google requires a Google-certified CMP integrated with the IAB TCF (for example AdSense **Privacy & messaging → European regulations** message) before personalized ads are served. Configure it before enabling ads. See [Google's consent management requirements](https://support.google.com/adsense/answer/13554116).
+- Enabling analytics or AdSense also requires adding their domains to the CSP in `public/_headers` and `vercel.json` (currently `script-src 'self'`, which blocks third-party scripts).

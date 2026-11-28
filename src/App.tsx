@@ -1258,6 +1258,7 @@ export default function App() {
                 <li><button type="button" onClick={() => setLegalDoc('terms')} className="hover:text-indigo-600">Terms and Conditions</button></li>
                 <li><button type="button" onClick={() => setLegalDoc('disclaimer')} className="hover:text-indigo-600">Disclaimer</button></li>
                 <li><button type="button" onClick={() => setLegalDoc('cookies')} className="hover:text-indigo-600">Cookie Policy</button></li>
+                <li><button type="button" onClick={() => window.dispatchEvent(new Event('mypdfbuilder:open-cookie-settings'))} className="hover:text-indigo-600">Cookie Settings</button></li>
               </ul>
             </div>
           </div>

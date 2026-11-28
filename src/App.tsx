@@ -50,6 +50,7 @@ import {
 import { AdSlot } from './components/AdSlot';
 import { AdditionalToolsModal, UtilityToolId } from './components/AdditionalToolsModal';
 import { CookieConsent } from './components/CookieConsent';
+import { openCookieSettings } from './utils/consent';
 import { LegalDocType, LegalModal } from './components/LegalModal';
 import { PdfPreview } from './components/PdfPreview';
 import type { ActivePlatformTool } from './components/PdfToolsSuite';
@@ -271,6 +272,7 @@ export default function App() {
   const [uploadedFilename, setUploadedFilename] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const toolWorkspaceRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<HTMLTextAreaElement>(null);
 
   const [isGenerating, setIsGenerating] = useState(false);
@@ -296,7 +298,9 @@ export default function App() {
     return { characters, words, lines };
   }, [text]);
 
-  const selectPlatformTool = (tool: ActivePlatformTool, focusUpload = false) => {
+  // Switches the active tool and keeps the URL in sync so refresh, back/forward
+  // and shared links stay on the same tool.
+  const switchPlatformTool = (tool: ActivePlatformTool) => {
     setActivePlatformTool(tool);
     if (typeof window !== 'undefined') {
       const targetPath = `/${TOOLS_SEO[tool].slug}/`;
@@ -304,14 +308,40 @@ export default function App() {
         window.history.pushState({ tool }, '', targetPath);
       }
     }
+  };
+
+  const selectPlatformTool = (tool: ActivePlatformTool, focusUpload = false) => {
+    switchPlatformTool(tool);
     setConvertDropdownOpen(false);
     setAllToolsDropdownOpen(false);
     setMobileMenuOpen(false);
     const el = document.getElementById('generator');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
     if (tool === 'text-to-pdf') {
+      // The TXT input is rendered outside the tool switch, so it exists even
+      // when this is called from another tool's page.
       if (focusUpload) fileInputRef.current?.click();
       else setTimeout(() => editorRef.current?.focus(), 350);
+    }
+  };
+
+  // Opens the file picker of whichever tool is currently active instead of
+  // always jumping to Text to PDF. Tools without a file input (e.g. HTML to PDF)
+  // get their first input field focused instead.
+  const openActiveToolFilePicker = () => {
+    if (activePlatformTool === 'text-to-pdf') {
+      fileInputRef.current?.click();
+      return;
+    }
+    const workspace = toolWorkspaceRef.current;
+    const fileInput = workspace?.querySelector<HTMLInputElement>('input[type="file"]:not([disabled])');
+    if (fileInput) {
+      fileInput.click();
+      return;
+    }
+    if (workspace) {
+      workspace.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      workspace.querySelector<HTMLElement>('textarea, input:not([type="hidden"]), select')?.focus({ preventScroll: true });
     }
   };
 
@@ -665,7 +695,7 @@ export default function App() {
               <div className="mt-6 flex flex-wrap items-center gap-4">
                 <button
                   type="button"
-                  onClick={() => selectPlatformTool('text-to-pdf')}
+                  onClick={() => selectPlatformTool(activePlatformTool)}
                   className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-white shadow-md shadow-indigo-600/20 transition hover:bg-indigo-700"
                 >
                   <FilePlus2 className="h-4 w-4" />
@@ -700,7 +730,7 @@ export default function App() {
                   </p>
                   <button
                     type="button"
-                    onClick={() => selectPlatformTool('text-to-pdf', true)}
+                    onClick={openActiveToolFilePicker}
                     className="mt-6 inline-flex w-full max-w-xs items-center justify-center gap-2 rounded-full bg-indigo-600 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-600/25 transition hover:bg-indigo-700"
                   >
                     <Plus className="h-5 w-5" />
@@ -730,7 +760,7 @@ export default function App() {
                 </p>
                 <button
                   type="button"
-                  onClick={() => selectPlatformTool('text-to-pdf', true)}
+                  onClick={openActiveToolFilePicker}
                   className="mt-6 inline-flex w-full max-w-xs items-center justify-center gap-2.5 rounded-full bg-indigo-600 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-600/25 transition hover:bg-indigo-700"
                 >
                   <Plus className="h-5 w-5" />
@@ -743,7 +773,8 @@ export default function App() {
                 <button
                   key={id}
                   type="button"
-                  onClick={() => setActivePlatformTool(id)}
+                  onClick={() => switchPlatformTool(id)}
+                  aria-pressed={activePlatformTool === id}
                   className={`inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-bold transition ${
                     activePlatformTool === id
                       ? 'bg-indigo-600 text-white shadow-sm'
@@ -755,13 +786,28 @@ export default function App() {
               ))}
             </div>
 
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".txt,text/plain"
+              aria-label="Upload a plain text file"
+              className="sr-only"
+              tabIndex={-1}
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) processTxtFile(file);
+                e.target.value = '';
+              }}
+            />
+
+            <div ref={toolWorkspaceRef}>
             {activePlatformTool !== 'text-to-pdf' ? (
               <Suspense fallback={<div role="status" aria-live="polite" className="rounded-xl border border-slate-200 bg-white p-4 text-sm dark:border-slate-800 dark:bg-slate-900">Loading PDF tool…</div>}>
                 <PdfToolsSuite
                   activeTool={activePlatformTool}
                   onSendTextToEditor={(extracted) => {
                     updateTextWithHistory(extracted);
-                    setActivePlatformTool('text-to-pdf');
+                    switchPlatformTool('text-to-pdf');
                     setStatusBanner({ type: 'success', message: 'Loaded extracted PDF text into the Text to PDF editor.' });
                   }}
                 />
@@ -833,18 +879,6 @@ export default function App() {
                     >
                       <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3 dark:border-slate-800">
                         <div className="flex flex-wrap items-center gap-1.5">
-                          <input
-                            ref={fileInputRef}
-                            type="file"
-                            accept=".txt,text/plain"
-                            aria-label="Upload a plain text file"
-                            className="sr-only"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) processTxtFile(file);
-                              e.target.value = '';
-                            }}
-                          />
                           <button type="button" onClick={() => fileInputRef.current?.click()} className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1.5 text-xs font-semibold text-indigo-700 hover:bg-indigo-100 dark:bg-indigo-950 dark:text-indigo-300">
                             <FileUp className="h-3.5 w-3.5" /> Upload TXT
                           </button>
@@ -1047,6 +1081,7 @@ export default function App() {
                 </div>
               </div>
             )}
+            </div>
           </div>
         </section>
 
@@ -1252,6 +1287,7 @@ export default function App() {
                 <li><button type="button" onClick={() => setLegalDoc('terms')} className="hover:text-indigo-600">Terms and Conditions</button></li>
                 <li><button type="button" onClick={() => setLegalDoc('disclaimer')} className="hover:text-indigo-600">Disclaimer</button></li>
                 <li><button type="button" onClick={() => setLegalDoc('cookies')} className="hover:text-indigo-600">Cookie Policy</button></li>
+                <li><button type="button" onClick={() => { setLegalDoc(null); openCookieSettings(); }} className="hover:text-indigo-600">Cookie Settings</button></li>
               </ul>
             </div>
           </div>
@@ -1269,7 +1305,7 @@ export default function App() {
         editorText={text}
         onApplyToEditor={(next) => {
           updateTextWithHistory(next);
-          setActivePlatformTool('text-to-pdf');
+          switchPlatformTool('text-to-pdf');
           setStatusBanner({ type: 'success', message: 'Updated editor text from utility tool.' });
         }}
       />

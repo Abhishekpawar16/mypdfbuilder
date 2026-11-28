@@ -74,7 +74,7 @@ const LEGAL_CONTENT: Record<Exclude<LegalDocType, null>, { title: string; body: 
     title: 'Privacy Policy',
     body: (
       <div className="space-y-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-        <p className="text-xs text-slate-400">Last Updated: November 24, 2026</p>
+        <p className="text-xs text-slate-400">Last Updated: November 28, 2026</p>
         <p>
           At <strong>MyPDFBuilder</strong> (<code>mypdfbuilder.com</code>), your privacy comes first. This Privacy
           Policy explains what happens when you use our tools, what limited data may be processed, and the choices you
@@ -101,8 +101,7 @@ const LEGAL_CONTENT: Record<Exclude<LegalDocType, null>, { title: string; body: 
         <div>
           <h3 className="text-base font-bold text-slate-900 dark:text-white">3. Analytics &amp; Google AdSense</h3>
           <p className="mt-1">
-            Analytics and advertising scripts are not enabled in this release. If they are added later, this policy and
-            the consent controls will be updated before they are activated.
+            As of the date above, no analytics service or Google AdSense advertising script is enabled by this website. Analytics and advertising are planned possibilities, not currently active services. If introduced, the relevant providers, purposes, data categories, and controls will be disclosed before activation where required. Hosting and security providers may process technical request data such as IP address, browser, device, and access information to deliver and protect the site.
           </p>
         </div>
         <div>
@@ -124,7 +123,7 @@ const LEGAL_CONTENT: Record<Exclude<LegalDocType, null>, { title: string; body: 
     title: 'Terms and Conditions',
     body: (
       <div className="space-y-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-        <p className="text-xs text-slate-400">Last Updated: November 24, 2026</p>
+        <p className="text-xs text-slate-400">Last Updated: November 28, 2026</p>
         <p>
           By accessing or using <strong>MyPDFBuilder</strong> (<code>mypdfbuilder.com</code>), you agree to these Terms
           and Conditions. If you do not agree, please discontinue use of the website.
@@ -192,23 +191,42 @@ const LEGAL_CONTENT: Record<Exclude<LegalDocType, null>, { title: string; body: 
     title: 'Cookie Policy',
     body: (
       <div className="space-y-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-        <p className="text-xs text-slate-400">Last Updated: November 24, 2026</p>
+        <p className="text-xs text-slate-400">Last Updated: November 28, 2026</p>
         <p>
-          This notice explains how <strong>MyPDFBuilder</strong> (<code>mypdfbuilder.com</code>) uses browser storage.
+          This notice explains how <strong>MyPDFBuilder</strong> (<code>mypdfbuilder.com</code>) uses browser storage and describes optional technologies that may be introduced in the future. The categories below distinguish current functionality from planned services.
         </p>
         <div>
-          <h3 className="text-base font-bold text-slate-900 dark:text-white">1. Essential browser storage</h3>
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">1. Strictly necessary storage</h3>
           <p className="mt-1">
-            The site stores your theme, language, and notice dismissal in localStorage. Text drafts are not saved unless
-            you enable Auto-Save in the editor; it is off by default for new browser profiles. A draft from an earlier
-            version may be restored for one session. Turning Auto-Save off or using Clear Saved Data removes the saved
-            draft.
+            The site stores settings such as theme, language, cookie preferences, and (only when enabled) a text draft
+            in browser localStorage. These functions support requested site features. Text Auto-Save is off by default
+            for new browser profiles. A draft from an earlier version may be restored for one session.
           </p>
         </div>
         <div>
-          <h3 className="text-base font-bold text-slate-900 dark:text-white">2. Analytics and advertising</h3>
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">2. Analytics technologies</h3>
           <p className="mt-1">
-            No analytics or advertising scripts or cookies are enabled in this release.
+            Analytics scripts and analytics cookies are not enabled in this release. If analytics is introduced, it may
+            help measure visits, usage patterns, and site performance. The provider and specific technologies will be
+            identified here before activation, and optional analytics will be subject to applicable choices and law.
+          </p>
+        </div>
+        <div>
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">3. Advertising technologies</h3>
+          <p className="mt-1">
+            Google AdSense is planned but is not active. No AdSense advertising script or advertising cookies are
+            currently enabled by this site. If advertising is activated, providers may use cookies, pixels, scripts,
+            or similar technologies to deliver ads, limit frequency, measure performance, and personalize ads where
+            permitted. The actual providers and choices will be disclosed before activation.
+          </p>
+        </div>
+        <div>
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">4. Third-party technologies and choices</h3>
+          <p className="mt-1">
+            Hosting, security, and any future analytics or advertising providers may process technical information
+            through their own technologies under their own terms. Different providers may use different technologies.
+            Use the Cookie Settings control in the site footer to review or change optional category preferences.
+            Applicable consent requirements vary by location; this notice is not a certification of legal compliance.
           </p>
         </div>
       </div>

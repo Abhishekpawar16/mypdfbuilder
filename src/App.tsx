@@ -700,7 +700,10 @@ export default function App() {
                   </p>
                   <button
                     type="button"
-                    onClick={() => selectPlatformTool('text-to-pdf', true)}
+                    onClick={() => {
+                    if (activePlatformTool === 'text-to-pdf') fileInputRef.current?.click();
+                    else document.querySelector<HTMLInputElement>('#generator input[type="file"]')?.click();
+                  }}
                     className="mt-6 inline-flex w-full max-w-xs items-center justify-center gap-2 rounded-full bg-indigo-600 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-600/25 transition hover:bg-indigo-700"
                   >
                     <Plus className="h-5 w-5" />
@@ -730,7 +733,10 @@ export default function App() {
                 </p>
                 <button
                   type="button"
-                  onClick={() => selectPlatformTool('text-to-pdf', true)}
+                  onClick={() => {
+                    if (activePlatformTool === 'text-to-pdf') fileInputRef.current?.click();
+                    else document.querySelector<HTMLInputElement>('#generator input[type="file"]')?.click();
+                  }}
                   className="mt-6 inline-flex w-full max-w-xs items-center justify-center gap-2.5 rounded-full bg-indigo-600 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-600/25 transition hover:bg-indigo-700"
                 >
                   <Plus className="h-5 w-5" />
@@ -743,7 +749,7 @@ export default function App() {
                 <button
                   key={id}
                   type="button"
-                  onClick={() => setActivePlatformTool(id)}
+                  onClick={() => selectPlatformTool(id)}
                   className={`inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-bold transition ${
                     activePlatformTool === id
                       ? 'bg-indigo-600 text-white shadow-sm'
@@ -761,7 +767,7 @@ export default function App() {
                   activeTool={activePlatformTool}
                   onSendTextToEditor={(extracted) => {
                     updateTextWithHistory(extracted);
-                    setActivePlatformTool('text-to-pdf');
+                    selectPlatformTool('text-to-pdf');
                     setStatusBanner({ type: 'success', message: 'Loaded extracted PDF text into the Text to PDF editor.' });
                   }}
                 />
@@ -1252,6 +1258,7 @@ export default function App() {
                 <li><button type="button" onClick={() => setLegalDoc('terms')} className="hover:text-indigo-600">Terms and Conditions</button></li>
                 <li><button type="button" onClick={() => setLegalDoc('disclaimer')} className="hover:text-indigo-600">Disclaimer</button></li>
                 <li><button type="button" onClick={() => setLegalDoc('cookies')} className="hover:text-indigo-600">Cookie Policy</button></li>
+                <li><button type="button" onClick={() => window.dispatchEvent(new Event('mypdfbuilder:open-cookie-settings'))} className="hover:text-indigo-600">Cookie Settings</button></li>
               </ul>
             </div>
           </div>
@@ -1269,7 +1276,7 @@ export default function App() {
         editorText={text}
         onApplyToEditor={(next) => {
           updateTextWithHistory(next);
-          setActivePlatformTool('text-to-pdf');
+          selectPlatformTool('text-to-pdf');
           setStatusBanner({ type: 'success', message: 'Updated editor text from utility tool.' });
         }}
       />

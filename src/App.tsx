@@ -749,7 +749,7 @@ export default function App() {
                 <button
                   key={id}
                   type="button"
-                  onClick={() => setActivePlatformTool(id)}
+                  onClick={() => selectPlatformTool(id)}
                   className={`inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-bold transition ${
                     activePlatformTool === id
                       ? 'bg-indigo-600 text-white shadow-sm'
@@ -767,7 +767,7 @@ export default function App() {
                   activeTool={activePlatformTool}
                   onSendTextToEditor={(extracted) => {
                     updateTextWithHistory(extracted);
-                    setActivePlatformTool('text-to-pdf');
+                    selectPlatformTool('text-to-pdf');
                     setStatusBanner({ type: 'success', message: 'Loaded extracted PDF text into the Text to PDF editor.' });
                   }}
                 />
@@ -1276,7 +1276,7 @@ export default function App() {
         editorText={text}
         onApplyToEditor={(next) => {
           updateTextWithHistory(next);
-          setActivePlatformTool('text-to-pdf');
+          selectPlatformTool('text-to-pdf');
           setStatusBanner({ type: 'success', message: 'Updated editor text from utility tool.' });
         }}
       />

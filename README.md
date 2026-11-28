@@ -17,6 +17,17 @@ npm run preview
 
 The production build is written to `dist/` and includes dedicated landing pages for the tool routes. No environment variables are required.
 
+## End-to-end tests
+
+Install Playwright's Chromium browser once, then run the browser regression suite:
+
+```bash
+npx playwright install chromium
+npm run test:e2e
+```
+
+The suite covers direct tool routes, file selection and downloads, tool history, cookie preferences, policy links, and responsive widths.
+
 ## Cloudflare Pages
 
 - Repository root: `/`

@@ -6,20 +6,22 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && node scripts/generate-seo-pages.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:e2e": "npm run build && playwright test"
   },
   "dependencies": {
     "jspdf": "^4.2.1",
+    "jszip": "^3.10.1",
     "lucide-react": "^0.460.0",
+    "mammoth": "^1.8.0",
     "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^6.5.438",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "mammoth": "^1.8.0",
-    "jszip": "^3.10.1",
     "xlsx": "file:vendor/xlsx-0.20.3.tgz"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.1",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",

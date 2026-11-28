@@ -91,29 +91,56 @@ const LEGAL_CONTENT: Record<Exclude<LegalDocType, null>, { title: string; body: 
         <div>
           <h3 className="text-base font-bold text-slate-900 dark:text-white">2. Optional local auto-save</h3>
           <p className="mt-1">
-            Auto-Save is off by default for new browser profiles. If you enable it in the Text to PDF editor, your
-            browser stores your current draft locally in <code>localStorage</code> so you don&apos;t lose work on
-            refresh. Turning Auto-Save off removes the saved draft. A draft from an earlier version may be restored for
-            one session, but is not saved again unless you enable Auto-Save. You can clear saved data anytime with one
-            click.
+            Theme and language preferences, and your cookie category choice, are stored in your browser&apos;s{' '}
+            <code>localStorage</code>. Text Auto-Save is off by default for new browser profiles. If you enable it in
+            the Text to PDF editor, your draft is stored locally so you can restore it after a refresh. Turning
+            Auto-Save off or using Clear Saved Data removes the saved draft. A draft from an earlier version may be
+            restored for one session, but is not saved again unless you enable Auto-Save. Files selected for conversion
+            are processed in the browser and are not uploaded to MyPDFBuilder.
           </p>
         </div>
         <div>
-          <h3 className="text-base font-bold text-slate-900 dark:text-white">3. Analytics &amp; Google AdSense</h3>
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">3. Information processed by hosting and security providers</h3>
           <p className="mt-1">
-            As of the date above, no analytics service or Google AdSense advertising script is enabled by this website. Analytics and advertising are planned possibilities, not currently active services. If introduced, the relevant providers, purposes, data categories, and controls will be disclosed before activation where required. Hosting and security providers may process technical request data such as IP address, browser, device, and access information to deliver and protect the site.
+            When your browser requests a page, the service hosting or protecting the website may process technical
+            request information such as your IP address, browser and device details, requested page, referring page,
+            and request time to deliver and secure the site. MyPDFBuilder has no account system or application
+            database. We have not verified the exact fields or retention periods used by the hosting and security
+            providers; their own privacy notices and terms apply.
           </p>
         </div>
         <div>
-          <h3 className="text-base font-bold text-slate-900 dark:text-white">4. Contact &amp; your rights</h3>
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">4. Analytics and advertising</h3>
           <p className="mt-1">
-            The contact form opens a draft in your email application; it does not submit the message to our website.
-            If you send that message or email us at{' '}
+            As of November 28, 2026, no analytics service is configured and no Google AdSense advertising script is
+            active on this site. Analytics and AdSense are planned, not current services. Before either is enabled, we
+            will identify the provider, purposes, data categories, and controls here. If advertising is activated,
+            Google and its advertising partners may process technical and ad interaction information using cookies or
+            similar technologies to deliver and measure ads, limit repetition, and personalize ads where permitted.
+            The configuration and your choices determine what applies. The tools do not send document contents to
+            analytics or advertising services.
+          </p>
+        </div>
+        <div>
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">5. Sharing and retention</h3>
+          <p className="mt-1">
+            The site does not receive the contents of files processed in your browser. Hosting and security providers
+            may handle technical request data to operate the site; analytics and advertising providers are not
+            currently configured. The contact form opens a draft in your email application and does not send anything
+            until you choose to send it. If you email us, we use the message to respond. We have not verified
+            provider-specific log or correspondence retention periods and do not state a fixed period here.
+          </p>
+        </div>
+        <div>
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">6. Contact and privacy choices</h3>
+          <p className="mt-1">
+            Depending on where you live, applicable privacy laws may give you rights concerning personal information,
+            such as requesting access, correction, deletion, or limits on certain uses. The rights available depend
+            on the law that applies. To ask a question or make a request, email{' '}
             <a href="mailto:support@mypdfbuilder.com" className="font-medium text-indigo-600 underline dark:text-indigo-400">
               support@mypdfbuilder.com
             </a>
-            , we use your name and email solely to reply. Under GDPR, CCPA, and similar laws, you may request access to
-            or deletion of any direct correspondence at any time.
+            . You can review or change optional cookie category preferences from Cookie Settings in the site footer.
           </p>
         </div>
       </div>
@@ -193,40 +220,69 @@ const LEGAL_CONTENT: Record<Exclude<LegalDocType, null>, { title: string; body: 
       <div className="space-y-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
         <p className="text-xs text-slate-400">Last Updated: November 28, 2026</p>
         <p>
-          This notice explains how <strong>MyPDFBuilder</strong> (<code>mypdfbuilder.com</code>) uses browser storage and describes optional technologies that may be introduced in the future. The categories below distinguish current functionality from planned services.
+          This notice explains how <strong>MyPDFBuilder</strong> (<code>mypdfbuilder.com</code>) uses cookies and similar
+          browser technologies. The application currently uses <code>localStorage</code> for preferences; analytics
+          and advertising technologies are described separately as planned services, not active integrations.
         </p>
         <div>
           <h3 className="text-base font-bold text-slate-900 dark:text-white">1. Strictly necessary storage</h3>
           <p className="mt-1">
-            The site stores settings such as theme, language, cookie preferences, and (only when enabled) a text draft
-            in browser localStorage. These functions support requested site features. Text Auto-Save is off by default
-            for new browser profiles. A draft from an earlier version may be restored for one session.
+            The site saves the cookie category choice in <code>localStorage</code> so it can remember your selection.
+            Theme and language are also saved there as preferences; these are browser storage, not cookies set by the
+            application. Text Auto-Save is a separate optional feature, off by default for new browser profiles. If
+            enabled, the draft stays in your browser until you turn Auto-Save off or clear saved data. A draft from an
+            earlier version may be restored for one session. We have not verified whether the hosting or security
+            provider uses its own cookies or similar technologies.
           </p>
         </div>
         <div>
           <h3 className="text-base font-bold text-slate-900 dark:text-white">2. Analytics technologies</h3>
           <p className="mt-1">
-            Analytics scripts and analytics cookies are not enabled in this release. If analytics is introduced, it may
-            help measure visits, usage patterns, and site performance. The provider and specific technologies will be
-            identified here before activation, and optional analytics will be subject to applicable choices and law.
+            No analytics service, script, or analytics cookie is active as of November 28, 2026. If analytics is
+            introduced, it may be used to understand visits, tools used, visitor behavior, and site performance. The
+            provider and technologies will be identified here before activation; analytics will follow your saved
+            choice and any consent required by applicable law.
           </p>
         </div>
         <div>
           <h3 className="text-base font-bold text-slate-900 dark:text-white">3. Advertising technologies</h3>
           <p className="mt-1">
-            Google AdSense is planned but is not active. No AdSense advertising script or advertising cookies are
-            currently enabled by this site. If advertising is activated, providers may use cookies, pixels, scripts,
-            or similar technologies to deliver ads, limit frequency, measure performance, and personalize ads where
-            permitted. The actual providers and choices will be disclosed before activation.
+            Google AdSense is planned but is not active. No AdSense script or advertising cookie is currently enabled
+            by the application. If advertising is activated, Google and other providers may use cookies, pixels,
+            scripts, or similar technologies to deliver ads, limit frequency, measure performance, and show
+            personalized or non-personalized ads depending on the configuration, your choices, and applicable rules.
+            The providers and controls will be identified before activation.
           </p>
         </div>
         <div>
-          <h3 className="text-base font-bold text-slate-900 dark:text-white">4. Third-party technologies and choices</h3>
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">4. Third-party technologies</h3>
           <p className="mt-1">
-            Hosting, security, and any future analytics or advertising providers may process technical information
-            through their own technologies under their own terms. Different providers may use different technologies.
-            Use the Cookie Settings control in the site footer to review or change optional category preferences.
-            Applicable consent requirements vary by location; this notice is not a certification of legal compliance.
+            Hosting, security, analytics, and advertising providers may process information using their own cookies,
+            pixels, scripts, or similar technologies, depending on the service and its configuration. Providers do not
+            all use the same technologies. For its publisher products, Google requires a Google-certified CMP
+            integrated with the IAB Transparency and Consent Framework when serving personalized ads to users in the
+            EEA, UK, or Switzerland. This site&apos;s preference panel is not a certified CMP and does not by itself
+            meet that requirement. Before Google ads are served to those regions, the applicable requirements and
+            consent setup must be verified. See{' '}
+            <a
+              href="https://support.google.com/adsense/answer/13554116"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium text-indigo-600 underline dark:text-indigo-400"
+            >
+              Google&apos;s AdSense CMP guidance
+            </a>
+            .
+          </p>
+        </div>
+        <div>
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">5. Your choices</h3>
+          <p className="mt-1">
+            The banner lets you accept all, reject non-essential, or customize analytics and advertising separately.
+            You can save and later change your selection from Cookie Settings in the site footer. Analytics and
+            advertising are not currently active, so saving a choice records your preference but does not load either
+            technology. Optional technologies must be connected to and respect the saved choice before activation.
+            Applicable requirements vary by location; this notice is not a certification of legal compliance.
           </p>
         </div>
       </div>

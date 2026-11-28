@@ -66,6 +66,12 @@ function formatBytes(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
 }
 
+function takeSelectedFiles(input: HTMLInputElement): File[] {
+  const files = Array.from(input.files ?? []);
+  input.value = '';
+  return files;
+}
+
 async function loadPdfJs() {
   const pdfjsLib = await import('pdfjs-dist');
   pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
@@ -400,7 +406,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
               multiple
               className="hidden"
               onChange={(e) => {
-                const files = Array.from(e.target.files || []);
+                const files = takeSelectedFiles(e.currentTarget);
                 if (files.length) setMergeFiles((p) => [...p, ...files]);
               }}
             />
@@ -486,7 +492,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
               accept=".pdf,application/pdf"
               className="hidden"
               onChange={(e) => {
-                const f = e.target.files?.[0];
+                const f = takeSelectedFiles(e.currentTarget)[0];
                 if (f) handleSplitUpload(f);
               }}
             />
@@ -534,7 +540,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
               type="file"
               accept=".pdf,application/pdf"
               className="hidden"
-              onChange={(e) => setCompressFile(e.target.files?.[0] || null)}
+              onChange={(e) => setCompressFile(takeSelectedFiles(e.currentTarget)[0] || null)}
             />
           </label>
           <button
@@ -566,7 +572,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
               multiple
               className="hidden"
               onChange={(e) => {
-                const files = Array.from(e.target.files || []).map((file) => ({
+                const files = takeSelectedFiles(e.currentTarget).map((file) => ({
                   file,
                   previewUrl: URL.createObjectURL(file),
                 }));
@@ -628,7 +634,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
               accept=".pdf,application/pdf"
               className="hidden"
               onChange={(e) => {
-                const f = e.target.files?.[0];
+                const f = takeSelectedFiles(e.currentTarget)[0];
                 if (f) handlePdfToJpg(f);
               }}
             />
@@ -669,7 +675,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
               accept=".pdf,application/pdf"
               className="hidden"
               onChange={(e) => {
-                const f = e.target.files?.[0];
+                const f = takeSelectedFiles(e.currentTarget)[0];
                 if (f) handleExtractText(f);
               }}
             />
@@ -723,7 +729,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
             type="file"
             accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             onChange={async (e) => {
-              const f = e.target.files?.[0];
+              const f = takeSelectedFiles(e.currentTarget)[0];
               if (!f) return;
               setWordFilename(f.name.replace(/\.docx$/i, '') + '.pdf');
               try {
@@ -784,7 +790,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
             type="file"
             accept=".pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation"
             onChange={async (e) => {
-              const f = e.target.files?.[0];
+              const f = takeSelectedFiles(e.currentTarget)[0];
               if (!f) return;
               if (f.size > 15 * 1024 * 1024) { setStatus({ type: 'error', msg: 'Presentation exceeds 15 MB limit.' }); return; }
               setPptxOutName(f.name.replace(/\.pptx$/i, '') + '.pdf');
@@ -842,7 +848,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
             type="file"
             accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv"
             onChange={async (e) => {
-              const f = e.target.files?.[0];
+              const f = takeSelectedFiles(e.currentTarget)[0];
               if (!f) return;
               if (f.size > 15 * 1024 * 1024) { setStatus({ type: 'error', msg: 'File exceeds 15 MB limit.' }); return; }
               setExcelOutName(f.name.replace(/\.(xlsx|xls|csv)$/i, '') + '.pdf');
@@ -891,7 +897,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
         <div className="space-y-4">
           <div className="flex items-center gap-2.5"><FileText className="h-5 w-5 text-blue-600" /><h3 className="text-lg font-bold">PDF to Word (.docx)</h3></div>
           <p className="text-sm text-slate-600 dark:text-slate-400">Extract text from your PDF and package it as an editable Microsoft Word (.docx) file in your browser.</p>
-          <input type="file" accept=".pdf,application/pdf" onChange={(e) => { const f = e.target.files?.[0]; if (f && f.size <= 25 * 1024 * 1024) setP2wFile(f); }} className="block w-full rounded-xl border border-slate-200 p-3 text-sm dark:border-slate-700" />
+          <input type="file" accept=".pdf,application/pdf" onChange={(e) => { const f = takeSelectedFiles(e.currentTarget)[0]; if (f && f.size <= 25 * 1024 * 1024) setP2wFile(f); }} className="block w-full rounded-xl border border-slate-200 p-3 text-sm dark:border-slate-700" />
           <button
             type="button"
             disabled={!p2wFile || busy}
@@ -931,7 +937,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
         <div className="space-y-4">
           <div className="flex items-center gap-2.5"><Table className="h-5 w-5 text-emerald-600" /><h3 className="text-lg font-bold">PDF to Excel (.xlsx)</h3></div>
           <p className="text-sm text-slate-600 dark:text-slate-400">Extract positioned text rows and columns from each PDF page into an Excel (.xlsx) workbook.</p>
-          <input type="file" accept=".pdf,application/pdf" onChange={(e) => { const f = e.target.files?.[0]; if (f && f.size <= 25 * 1024 * 1024) setP2xFile(f); }} className="block w-full rounded-xl border border-slate-200 p-3 text-sm dark:border-slate-700" />
+          <input type="file" accept=".pdf,application/pdf" onChange={(e) => { const f = takeSelectedFiles(e.currentTarget)[0]; if (f && f.size <= 25 * 1024 * 1024) setP2xFile(f); }} className="block w-full rounded-xl border border-slate-200 p-3 text-sm dark:border-slate-700" />
           <button
             type="button"
             disabled={!p2xFile || busy}
@@ -973,7 +979,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
         <div className="space-y-4">
           <div className="flex items-center gap-2.5"><Presentation className="h-5 w-5 text-orange-600" /><h3 className="text-lg font-bold">PDF to PowerPoint (.pptx)</h3></div>
           <p className="text-sm text-slate-600 dark:text-slate-400">Render every PDF page as a full-slide image in a downloadable PowerPoint (.pptx) presentation. Slide text and objects are not editable.</p>
-          <input type="file" accept=".pdf,application/pdf" onChange={(e) => { const f = e.target.files?.[0]; if (f && f.size <= 25 * 1024 * 1024) setP2pFile(f); }} className="block w-full rounded-xl border border-slate-200 p-3 text-sm dark:border-slate-700" />
+          <input type="file" accept=".pdf,application/pdf" onChange={(e) => { const f = takeSelectedFiles(e.currentTarget)[0]; if (f && f.size <= 25 * 1024 * 1024) setP2pFile(f); }} className="block w-full rounded-xl border border-slate-200 p-3 text-sm dark:border-slate-700" />
           <button
             type="button"
             disabled={!p2pFile || busy}
@@ -1021,7 +1027,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
         <div className="space-y-4">
           <div className="flex items-center gap-2.5"><ShieldCheck className="h-5 w-5 text-indigo-600" /><h3 className="text-lg font-bold">Update PDF Archive Metadata</h3></div>
           <p className="text-sm text-slate-600 dark:text-slate-400">Save a copy with archival metadata fields. This does not convert or validate PDF/A compliance.</p>
-          <input type="file" accept=".pdf,application/pdf" onChange={(e) => { const f = e.target.files?.[0]; if (f && f.size <= 25 * 1024 * 1024) setPdfaFile(f); }} className="block w-full rounded-xl border border-slate-200 p-3 text-sm dark:border-slate-700" />
+          <input type="file" accept=".pdf,application/pdf" onChange={(e) => { const f = takeSelectedFiles(e.currentTarget)[0]; if (f && f.size <= 25 * 1024 * 1024) setPdfaFile(f); }} className="block w-full rounded-xl border border-slate-200 p-3 text-sm dark:border-slate-700" />
           <button
             type="button"
             disabled={!pdfaFile || busy}
@@ -1057,7 +1063,7 @@ export const PdfToolsSuite: React.FC<PdfToolsSuiteProps> = ({ activeTool, onSend
             type="file"
             accept=".pdf,application/pdf"
             onChange={async (e) => {
-              const f = e.target.files?.[0];
+              const f = takeSelectedFiles(e.currentTarget)[0];
               if (!f || f.size > 25 * 1024 * 1024) return;
               const doc = await PDFDocument.load(await f.arrayBuffer());
               setEditFile(f);
